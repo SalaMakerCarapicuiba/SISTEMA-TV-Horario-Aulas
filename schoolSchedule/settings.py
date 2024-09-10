@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,9 +40,23 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'professors',
     'courses',
+    #necessário para o allatuth
+    'django.contrib.sites',  # Necessário para o Django Allauth
+    
+    # Django Allauth apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    
+    # (Opcional) Redes sociais para login
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
 
+SITE_ID = 1
+
 MIDDLEWARE = [
+    'allauth.account.middleware.AccountMiddleware', #RETIRAR SE DER PROBLEMA, PORÉM É ESSÊNCIAL PARA O ALLAUTH
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,7 +71,7 @@ ROOT_URLCONF = 'schoolSchedule.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,8 +84,24 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'schoolSchedule.wsgi.application'
+# Configurações do Django Allauth
+LOGIN_REDIRECT_URL = '/'  # Para onde redirecionar após login
+ACCOUNT_EMAIL_REQUIRED = True  # Exigir email no cadastro
+ACCOUNT_USERNAME_REQUIRED = True  # Desabilitar username se desejar
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+    'allauth.account.auth_backends.AuthenticationBackend',  # Allauth backend
+)
+ACCOUNT_LOGIN_ON_SIGNUP = False  # Não logar automaticamente após o cadastro
+ACCOUNT_SIGNUP_REDIRECT_URL = '/accounts/login/'  # Redirecionar para a página de login
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_FORMS = {
+    'login': 'schoolSchedule.adapters.CustomLoginForm',
+}
+
+
+WSGI_APPLICATION = 'schoolSchedule.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
