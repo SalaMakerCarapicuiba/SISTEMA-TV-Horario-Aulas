@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Professores</title>
+</head>
+<body>
+    <h1> Lista de professores </h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="{% url 'cadastrar_professor' %}">Cadastrar Professores</a>
+    <ul>
+        {% for professor in professores %}
+        <li>{{professor.nome}} - {{ professor.email }} - RA: {{ professor.ra }} <a href="{% url 'deletar_professor' professor.id %}">Deletar</a></li>
+        {% empty %}
+        <li>Nenhum professor cadastrado.</li>
+        {% endfor %}
+    <ul>
+</body>
+</html>
