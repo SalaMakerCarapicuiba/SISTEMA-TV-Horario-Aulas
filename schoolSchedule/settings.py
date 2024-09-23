@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'professors',
     'courses',
+    'materias',
+    'horarios',
+    'turmas',
+    'salas',
     #necessário para o allatuth
     'django.contrib.sites',  # Necessário para o Django Allauth
     

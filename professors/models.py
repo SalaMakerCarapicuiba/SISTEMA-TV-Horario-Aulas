@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from courses.models import Course  # Importa o model Course
+from materias.models import Materia
 
 class Professor(models.Model):
     nome = models.CharField(max_length=100)
@@ -8,7 +8,7 @@ class Professor(models.Model):
     ra = models.CharField(max_length=20, unique=True, default="")
     max_horas = models.IntegerField()
     horas_atuais = models.IntegerField(default=0)
-    cursos = models.ManyToManyField(Course, related_name='professores')  # Relacionamento ManyToMany
+    materias = models.ManyToManyField(Materia)  # Relacionamento ManyToMany
 
     def adicionar_horas(self, horas):
         """Adiciona horas ao professor, respeitando o limite máximo."""
