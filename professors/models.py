@@ -8,7 +8,7 @@ class Professor(models.Model):
     ra = models.CharField(max_length=20, unique=True, default="")
     max_horas = models.IntegerField()
     horas_atuais = models.IntegerField(default=0)
-    materias = models.ManyToManyField(Materia)  # Relacionamento ManyToMany
+    materias = models.ManyToManyField(Materia, blank=True)  # Relacionamento ManyToMany com blank=True
 
     def adicionar_horas(self, horas):
         """Adiciona horas ao professor, respeitando o limite máximo."""

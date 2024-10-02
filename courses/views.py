@@ -33,3 +33,14 @@ def edit_course_view(request, course_id):
     else:
         form = EditCourseForm(instance=course)
     return render(request, 'courses/edit_course.html', {'form': form, 'course': course})
+
+def delete_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if request.method == 'POST':
+        course.delete()
+        return redirect('course_list')  # Redirecionar para a lista de cursos ou outra página de sucesso
+    return render(request, 'delete_course_confirm.html', {'course': course})
+
+def course_list(request):
+    courses = Course.objects.all()
+    return render(request, 'courses/course_list.html', {'courses': courses})

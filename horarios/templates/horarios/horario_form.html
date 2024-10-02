@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Horário</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Editar Horário{% else %}Cadastrar Novo Horário{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'horario_list' %}">Cancelar</a>
+</body>
+</html>

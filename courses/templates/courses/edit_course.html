@@ -12,5 +12,13 @@
         {{ form.as_p }}
         <button type="submit">Salvar</button>
     </form>
+
+    <h2>Excluir Curso</h2>
+    <form method="post" action="{% url 'delete_course' course.id %}">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este curso?');">Excluir Curso</button>
+    </form>
+
+    <a href="{% url 'select_course' %}">Cancelar</a>  <!-- Altere 'course_list' para o nome correto da URL -->
 </body>
 </html>
