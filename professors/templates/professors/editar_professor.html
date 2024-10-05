@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Professor</title>
+</head>
+<body>
+    <h1>Editando o Professor: {{ professor.nome }}</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Exibe o formulário com os campos já preenchidos -->
+        
+        <button type="submit">Salvar Alterações</button>
+    </form>
+    
+    <a href="{% url 'detalhes_professor' professor.id %}">Cancelar</a>  <!-- Link para voltar sem salvar -->
+</body>
+</html>
