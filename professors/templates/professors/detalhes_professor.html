@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Professor</title>
+</head>
+<body>
+    <h1>Detalhes do Professor: {{ professor.nome }}</h1>
+    
+    <p><strong>Nome:</strong> {{ professor.nome }}</p>
+    <p><strong>Email:</strong> {{ professor.email }}</p>
+    <p><strong>RA:</strong> {{ professor.ra }}</p>
+    <p><strong>Máximo de Horas:</strong> {{ professor.max_horas }}</p>
+    <p><strong>Horas Atuais:</strong> {{ professor.horas_atuais }}</p>
+
+    <h3>Matérias:</h3>
+    {% if professor.materias.exists %}
+        <ul>
+            {% for materia in professor.materias.all %}
+                <li>{{ materia.nome }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>O professor não está vinculado a nenhuma matéria.</p>
+    {% endif %}
+    
+    <a href="{% url 'listar_professores' %}">Voltar para a lista de professores</a>
+</body>
+</html>
