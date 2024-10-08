@@ -17,7 +17,7 @@ class Materia(models.Model):
     nome = models.CharField(max_length=100)
     horario = models.ManyToManyField(Horario, blank=True)  # Permitir nulo
     semestre = models.IntegerField(validators=[MaxValueValidator(12), MinValueValidator(1)])
-    dias_da_semana = MultiSelectField(choices=DIAS_DA_SEMANA)
+    dias_da_semana = MultiSelectField(choices=DIAS_DA_SEMANA, max_length=100) 
 
     def __str__(self):
         return self.nome
