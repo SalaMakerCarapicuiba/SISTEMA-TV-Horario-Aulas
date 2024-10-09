@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Listar Professores</title> 
-    {% include  "app/custom/imports.html" %}
+    <title>Listar Professores</title>
+    {% include "app/custom/imports.html" %}
   </head>
-  <body class="font-montserrat bg-custom4 text-custom1">
+  <body class="font-montserrat bg-background text-custom1">
     <div class="min-h-screen p-4">
       <!-- Navbar -->
-      {% include  "app/widgets/navbar.html" %}
+      {% include "app/widgets/navbar.html" %}
 
       <!-- Title and Description -->
       <div class="mb-6">
@@ -76,15 +76,20 @@
           {% for professor in professores %}
           <tr class="border-b border-custom4 hover:bg-custom4 transition-all">
             <td class="p-3">{{ professor.ra }}</td>
-            <td class="p-3">{{professor.nome}}</td>
+            <td class="p-3 underline"><a href="{% url 'detalhes_professor' professor.id %}">{{professor.nome}}</a></td>
             <td class="p-3">{{professor.max_horas}}</td>
             <td class="p-3">{{ professor.email }}</td>
             <td class="p-3">
               <a
                 href="{% url 'deletar_professor' professor.id %}"
-                class="bg-custom1 text-white p-2 rounded hover:bg-custom2 transition-colors"
-                >⚙️</a
-              >
+                class="bg-error text-white p-2 rounded hover:bg-custom2 transition-colors"
+                ><i class="fa-solid fa-trash"></i
+              ></a>
+              <a
+                href="{% url 'editar_professor' professor.id %}"
+                class="bg-custom6 text-white p-2 rounded hover:bg-custom2 transition-colors"
+                ><i class="fa-solid fa-pen-to-square"></i
+              ></a>
             </td>
           </tr>
           {% empty %}
@@ -98,28 +103,42 @@
       </table>
 
       <!-- Pagination -->
-      <div class="flex justify-between items-center mt-4">
-        <button class="p-2 bg-custom2 text-white rounded hover:bg-custom1 transition-colors">
+      <div class="flex justify-end items-center mt-4 gap-x-2.5">
+        <button
+          class="p-2 bg-custom2 text-white rounded hover:bg-custom1 transition-colors"
+        >
           Voltar
         </button>
         <div class="space-x-2">
-          <button class="p-2 bg-custom1 text-white rounded hover:bg-custom2 transition-colors">
+          <button
+            class="p-2 bg-custom1 text-white rounded hover:bg-custom2 transition-colors"
+          >
             1
           </button>
-          <button class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors">
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
             2
           </button>
-          <button class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors">
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
             3
           </button>
-          <button class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors">
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
             ...
           </button>
-          <button class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors">
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
             12
           </button>
         </div>
-        <button class="p-2 bg-custom2 text-white rounded hover:bg-custom1 transition-colors">
+        <button
+          class="p-2 bg-custom2 text-white rounded hover:bg-custom1 transition-colors"
+        >
           Próximo
         </button>
       </div>

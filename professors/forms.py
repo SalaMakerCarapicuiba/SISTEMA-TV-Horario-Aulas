@@ -8,26 +8,27 @@ class ProfessorForm(forms.ModelForm):
         exclude = ['horas_atuais', 'cursos']
         widgets = {
             'nome': forms.TextInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400',
+                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400',
                 'placeholder': 'Ex: Carlos Alberto De Nobrega'
             }),
             'email': forms.EmailInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400',
+                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400',
                 'placeholder': 'Ex: carlos.nobrega@fatec.sp.gov.br'
             }),
             'ra': forms.TextInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400',
+                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400',
                 'placeholder': 'Ex: 42345-342'
             }),
-            'disciplina': forms.Select(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400',
-            }),
+    
             'max_horas': forms.NumberInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400',
+                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400',
             }),
-            # 'disciplina': forms.Select(attrs={
-            #     'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-white',
-            # }),
+
+            'materias': forms.CheckboxSelectMultiple(
+                attrs={
+                   
+                }
+            ),
         }
 
 class ProfessorEditarForm(forms.ModelForm):

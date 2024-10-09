@@ -1,30 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalhes do Professor</title>
+    {% include "app/custom/imports.html" %}
 </head>
-<body>
-    <h1>Detalhes do Professor: {{ professor.nome }}</h1>
-    
-    <p><strong>Nome:</strong> {{ professor.nome }}</p>
-    <p><strong>Email:</strong> {{ professor.email }}</p>
-    <p><strong>RA:</strong> {{ professor.ra }}</p>
-    <p><strong>Máximo de Horas:</strong> {{ professor.max_horas }}</p>
-    <p><strong>Horas Atuais:</strong> {{ professor.horas_atuais }}</p>
+<body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+    <section class="min-h-screen flex flex-col p-4">
+        <!-- Navbar -->
+        {% include "app/widgets/navbar.html" %}
 
-    <h3>Matérias:</h3>
-    {% if professor.materias.exists %}
-        <ul>
-            {% for materia in professor.materias.all %}
-                <li>{{ materia.nome }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>O professor não está vinculado a nenhuma matéria.</p>
-    {% endif %}
-    
-    <a href="{% url 'listar_professores' %}">Voltar para a lista de professores</a>
+        <!-- Conteúdo principal -->
+        <div class="flex-grow flex flex-col p-4">
+            <div class="bg-transparent border border-custom6 rounded-lg p-6 flex-grow flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-2xl font-bold text-custom1">
+                        Detalhes do Professor: {{ professor.nome }}
+                    </h1>
+                    <a
+                        href="{% url 'listar_professores' %}"
+                        class="text-blue-700 hover:underline"
+                    >
+                        &#8592; Voltar
+                    </a>
+                </div>
+
+                <p class="text-sm text-custom1 mb-4">
+                    <strong>Nome:</strong> {{ professor.nome }}<br>
+                    <strong>Email:</strong> {{ professor.email }}<br>
+                    <strong>RA:</strong> {{ professor.ra }}<br>
+                    <strong>Máximo de Horas:</strong> {{ professor.max_horas }}<br>
+                    <strong>Horas Atuais:</strong> {{ professor.horas_atuais }}
+                </p>
+
+                <h3 class="text-lg font-semibold text-custom1 mt-4">Matérias:</h3>
+                {% if professor.materias.exists %}
+                    <ul class="list-disc list-inside">
+                        {% for materia in professor.materias.all %}
+                            <li>{{ materia.nome }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>O professor não está vinculado a nenhuma matéria.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 </body>
 </html>
