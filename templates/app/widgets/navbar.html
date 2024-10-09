@@ -1,31 +1,42 @@
 <nav class="bg-custom6 p-4 rounded mb-6 flex justify-between items-center">
+  <div>
+    <i class="fa-solid fa-graduation-cap text-custom3"></i>
+    <a href="#" class="text-custom3 font-bold">Assistente</a>
+  </div>
   <div class="space-x-6">
-    <a href="#" class="text-custom1 hover:text-custom2 transition-colors"
-      >Assistente</a
-    >
-    <a href="#" class="text-custom1 hover:text-custom2 transition-colors"
-      >Salas</a
-    >
-    <a
-      href="#"
-      class="text-custom1 font-bold border-b-2 border-custom1 hover:text-custom2 transition-colors"
-      >Professores</a
-    >
-    <a href="#" class="text-custom1 hover:text-custom2 transition-colors"
-      >Cursos</a
-    >
-    <a href="#" class="text-custom1 hover:text-custom2 transition-colors"
-      >Turmas</a
-    >
-    <a href="#" class="text-custom1 hover:text-custom2 transition-colors"
-      >Disciplinas</a
-    >
+    <!-- Salas -->
+    <a href="/salas/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/salas/' %} font-bold {% endif %}">
+       Salas
+    </a>
+
+    <!-- Professores -->
+    <a href="/professors/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/professors/' %} font-bold {% endif %}">
+       Professores
+    </a>
+
+    <!-- Cursos -->
+    <a href="/courses/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/cou/' %} font-bold {% endif %}">
+       Cursos
+    </a>
+
+    <!-- Turmas -->
+    <a href="/turmas/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/turmas/' %} font-bold {% endif %}">
+       Turmas
+    </a>
+
+    <!-- Disciplinas -->
+    <a href="/disciplinas/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/disciplinas/' %} font-bold {% endif %}">
+       Disciplinas
+    </a>
   </div>
   <div>
-    <button
-      class="p-2 bg-custom2 text-white rounded hover:bg-custom1 transition-colors"
-    >
-      ⇄
+    <button class="p-2 bg-transparent text-white ">
+      <i class="fa-solid fa-right-from-bracket"></i>
     </button>
   </div>
 </nav>
