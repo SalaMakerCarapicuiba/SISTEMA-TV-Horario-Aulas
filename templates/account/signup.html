@@ -1,56 +1,77 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    {% include "app/custom/imports.html" %}
+    <link rel="stylesheet" href="{% static 'app/css/input.css' %}">    
 </head>
-<body>
-    <div class="wrapper">
-        <form method="post" action="{% url 'account_signup' %}">
-            {% csrf_token %}
-            <h2>Registro</h2>
-            <div class="error-messages">
-                {% if form.non_field_errors %}
-                    <ul>
-                        {% for error in form.non_field_errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                {% for field in form %}
-                    {% if field.errors %}
+<body class="font-montserrat bg-custom3">
+
+    <div class="min-h-screen grid grid-cols-2 rounded-lg shadow-lg overflow-hidden">
+        <!-- Left section -->
+        <div class="flex items-center justify-center bg-custom6 text-white rounded-xl m-8">
+            <div class="text-center">
+                <h2 class="text-2xl font-semibold">O sistema assistente de gerenciamento</h2>
+                <p class="mt-2 text-lg">Para a coordenação da FATEC Carapicuíba</p>
+            </div>
+        </div>
+
+        <!-- Right section -->
+        <div class="p-8 my-auto">
+            <h2 class="text-3xl font-bold mb-6">Cadastro de coordenação</h2>
+            <form method="post" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+
+                <!-- Non-field errors -->
+                <div class="mb-4 text-error">
+                    {% if form.non_field_errors %}
                         <ul>
-                            {% for error in field.errors %}
+                            {% for error in form.non_field_errors %}
                                 <li>{{ error }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
-                {% endfor %}
+                </div>
+
+                <!-- Nome completo -->
+                <div class="mb-4">
+                    <label for="{{ form.username.id_for_label }}" class="block text-custom1">Nome completo</label>
+                    {{ form.username }}
+                </div>
+
+                <!-- E-mail -->
+                <div class="mb-4">
+                    <label for="{{ form.email.id_for_label }}" class="block text-custom1">E-mail</label>
+                    {{ form.email }}
+                </div>
+
+                <!-- Senha -->
+                <div class="mb-4">
+                    <label for="{{ form.password1.id_for_label }}" class="block text-custom1">Senha</label>
+                    {{ form.password1 }}
+                </div>
+
+                <!-- Confirmar senha -->
+                <div class="mb-4">
+                    <label for="{{ form.password2.id_for_label }}" class="block text-custom1">Confirme sua senha</label>
+                    {{ form.password2 }}
+                </div>
+
+                <!-- Botão de Registro -->
+                <button type="submit" class="w-full py-2 px-4 bg-custom1 text-white font-semibold rounded-lg">Cadastrar-se</button>
+            </form>
+
+            <!-- Link para voltar -->
+            <div class="mt-6">
+                <a href="{% url 'account_login' %}" class="flex items-center text-custom1">
+                    <span class="mr-2">←</span> voltar
+                </a>
             </div>
-            <div class="input-field">
-                {{ form.username }}
-                <label for="{{ form.username.id_for_label }}">Insira seu nome de usuário</label>
-            </div>
-            <div class="input-field">
-                {{ form.email }}
-                <label for="{{ form.email.id_for_label }}">Insira seu email</label>
-            </div>
-            <div class="input-field">
-                {{ form.password1 }}
-                <label for="{{ form.password1.id_for_label }}">Insira sua senha</label>
-            </div>
-            <div class="input-field">
-                {{ form.password2 }}
-                <label for="{{ form.password2.id_for_label }}">Confirme sua senha</label>
-            </div>
-            <button type="submit">Registrar</button>
-            <div class="login">
-                <p>Já possui uma conta? <a href="{% url 'account_login' %}">Login</a></p>
-            </div>
-        </form>
+        </div>
     </div>
+
 </body>
 </html>

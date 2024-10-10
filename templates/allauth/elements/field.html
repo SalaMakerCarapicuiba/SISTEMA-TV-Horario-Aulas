@@ -23,7 +23,8 @@
                {% if attrs.placeholder %}placeholder="{{ attrs.placeholder }}"{% endif %}
                {% if attrs.autocomplete %}autocomplete="{{ attrs.autocomplete }}"{% endif %}
                value="{{ attrs.value|default_if_none:'' }}"
-               type="{{ attrs.type }}">
+               type="{{ attrs.type }}"
+               class="w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400">
     {% endif %}
     {% if slots.help_text %}
         <span>
