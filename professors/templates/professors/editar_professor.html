@@ -1,20 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editar Professor</title>
-</head>
-<body>
-    <h1>Editando o Professor: {{ professor.nome }}</h1>
-    
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Exibe o formulário com os campos já preenchidos -->
-        
-        <button type="submit">Salvar Alterações</button>
-    </form>
-    
-    <a href="{% url 'detalhes_professor' professor.id %}">Cancelar</a>  <!-- Link para voltar sem salvar -->
-</body>
+    {% include "app/custom/imports.html" %}
+  </head>
+  <body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+    <section class="min-h-screen flex flex-col p-4">
+      <!-- Navbar -->
+      {% include "app/widgets/navbar.html" %}
+
+      <!-- Conteúdo principal -->
+      <div class="flex-grow flex flex-col p-4">
+        <!-- Cadastro de Professores -->
+        <div
+          class="bg-transparent border border-custom6 rounded-lg p-6 flex-grow flex flex-col"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold text-custom1">
+              Editar professor
+            </h1>
+            <a
+              href="{% url 'listar_professores' %}"
+              class="text-blue-700 hover:underline"
+            >
+              &#8592; Voltar
+            </a>
+          </div>
+          <p class="text-sm text-custom1 mb-6">
+            Realize aqui a edição dos professores que lecionam na FATEC.
+          </p>
+
+          <!-- Formulário -->
+          <form
+            method="post"
+            class="space-y-6 flex-grow flex flex-col justify-between"
+          >
+            {% csrf_token %}
+
+            <div
+              class="grid grid-cols-2 gap-x-12 gap-y-6 flex-grow max-h-[200px]"
+            >
+              <div class="form-group">
+                <label
+                  for="{{ form.nome.id_for_label }}"
+                  class="block text-sm font-medium text-custom1 mb-1"
+                >
+                  Nome completo <span class="text-red-500">*</span>
+                </label>
+                {{ form.nome }} {% if form.nome.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                  {{ form.nome.errors }}
+                </div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label
+                  for="{{ form.email.id_for_label }}"
+                  class="block text-sm font-medium text-custom1 mb-1"
+                >
+                  Email institucional <span class="text-red-500">*</span>
+                </label>
+                {{ form.email }} {% if form.email.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                  {{ form.email.errors }}
+                </div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label
+                  for="{{ form.ra.id_for_label }}"
+                  class="block text-sm font-medium text-custom1 mb-1"
+                >
+                  RA (identificação) <span class="text-red-500">*</span>
+                </label>
+                {{ form.ra }} {% if form.ra.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                  {{ form.ra.errors }}
+                </div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label
+                  for="{{ form.max_horas.id_for_label }}"
+                  class="block text-sm font-medium text-custom1 mb-1"
+                >
+                  Max horas <span class="text-red-500">*</span>
+                </label>
+                {{ form.max_horas }} {% if form.max_horas.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                  {{ form.max_horas.errors }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="form-group col-span-2">
+                <label
+                  for="{{ form.materias.id_for_label }}"
+                  class="block text-sm font-medium text-custom1 mb-1"
+                >
+                  Materias <span class="text-red-500">*</span>
+                </label>
+                {{ form.materias }} {% if form.materias.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                  {{ form.disciplina.errors }}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            
+            <!-- Botões de ação -->
+            <div class="flex justify-between items-center mt-6">
+              <button
+                type="button"
+                class="text-custom1 bg-transparent border border-blue-700 text-sm px-4 py-2 rounded-lg hover:bg-blue-100"
+              >
+                Cadastrar disponibilidades de horários
+              </button>
+
+              <div class="flex space-x-4">
+                <button
+                  type="button"
+                  class="text-custom1 bg-transparent border border-blue-700 text-sm px-4 py-2 rounded-lg hover:bg-blue-100"
+                >
+                  Salvar e fechar
+                </button>
+                <button
+                  type="submit"
+                  class="bg-custom6 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-800"
+                >
+                  Salvar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

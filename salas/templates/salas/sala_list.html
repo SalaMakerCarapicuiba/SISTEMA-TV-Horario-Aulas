@@ -1,17 +1,63 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Salas</title>
-</head>
-<body>
-    <h1>Lista de Salas</h1>
-    <ul>
+    {% include "app/custom/imports.html" %}
+  </head>
+  <body class="font-montserrat bg-background text-custom1">
+    <div class="min-h-screen p-4">
+    <!-- Navbar -->
+    {% include "app/widgets/navbar.html" %}
+     
+
+      <!-- Title and Description -->
+      <div class="my-6">
+        <h1 class="text-2xl font-bold">Salas</h1>
+        <p class="text-custom2">
+          Visualize as informações dos professores, disciplinas ou turmas, separadas por sala.
+        </p>
+      </div>
+
+      <!-- Search and Filters -->
+      <div class="flex justify-between items-center mb-6">
+        <input
+          type="text"
+          placeholder="Pesquisar por salas / laboratórios"
+          class="border border-custom2 p-2 rounded-lg w-1/3 bg-transparent text-custom1 placeholder-custom1 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        />
+        <div class="flex space-x-4">
+          <select
+            class="border border-custom2 p-2 rounded-lg bg-transparent text-custom1 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          >
+            <option>Ordenação: A-Z</option>
+            <option>Ordenação: Z-A</option>
+          </select>
+          <select
+            class="border border-custom2 p-2 rounded-lg bg-transparent text-custom1 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          >
+            <option>Período: manhã</option>
+            <option>Período: tarde</option>
+            <option>Período: noite</option>
+          </select>
+          <a
+            href="{% url 'sala_create' %}"
+            class="p-2 bg-custom6 text-white rounded-lg hover:bg-custom5 transition-colors"
+          >Cadastrar nova sala</a>
+        </div>
+      </div>
+
+      <!-- Bloco 1 -->
+      <h2 class="text-xl font-bold mb-4">Bloco 1 (Fatec)</h2>
+      <div class="grid grid-cols-3 gap-4 mb-8">
         {% for sala in salas %}
-            <li>Sala {{ sala.numero }} - <a href="{% url 'sala_update' sala.pk %}">Editar</a> - <a href="{% url 'sala_delete' sala.pk %}">Excluir</a></li>
+          <div class="p-4 bg-custom6 text-white rounded-lg">
+            <h3 class="text-lg font-semibold">Sala {{ sala.numero }}</h3>
+            <p>{{ sala.status }}</p>
+          </div>
         {% endfor %}
-    </ul>
-    <a href="{% url 'sala_create' %}">Cadastrar Nova Sala</a>
-</body>
+      </div>
+    </div>
+  </body>
 </html>
