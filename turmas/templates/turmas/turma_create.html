@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Turma</title>
+    <title>Criar Turma</title>
 </head>
 <body>
-    <h1>{% if form.instance.pk %}Editar Turma{% else %}Cadastrar Nova Turma{% endif %}</h1>
+    <h1>Criar Turma</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Salvar</button>
     </form>
-    <a href="{% url 'turma_list' %}">Cancelar</a>
+
 </body>
 </html>

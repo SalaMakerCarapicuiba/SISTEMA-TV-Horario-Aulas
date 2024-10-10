@@ -4,4 +4,4 @@ from .models import Turma
 class TurmaForm(forms.ModelForm):
     class Meta:
         model = Turma
-        fields = ['nome', 'semestre', 'periodo']
+        fields = ['nome', 'semestre', 'periodo']  # Adicione ou remova campos conforme necessário

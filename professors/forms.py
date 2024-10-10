@@ -24,18 +24,10 @@ class ProfessorForm(forms.ModelForm):
                 'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400',
             }),
 
-            'materias': forms.CheckboxSelectMultiple(
-                attrs={
-                   
-                }
-            ),
         }
 
 class ProfessorEditarForm(forms.ModelForm):
     class Meta:
         model = Professor
-        fields = ['nome', 'email', 'ra', 'max_horas', 'horas_atuais', 'materias']
+        fields = ['nome', 'email', 'ra', 'max_horas', 'horas_atuais']
         exclude = ['horas_atuais']
-        widgets = {
-            'materias': forms.CheckboxSelectMultiple(),  # Exibe as matérias como checkboxes
-        }

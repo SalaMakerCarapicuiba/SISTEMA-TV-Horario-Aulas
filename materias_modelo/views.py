@@ -25,20 +25,20 @@ def materia_modelo_edit(request, id):
             form.save()
             courses = materia.course_set.all()  # Obtém todos os cursos associados à matéria
             if courses:
-                return redirect('course_edit', id=courses[0].id)  # Redireciona para o primeiro curso associado
+                return redirect('course_edit', courses[0].id)  # Redireciona para o primeiro curso associado
             else:
-                return redirect('course_list')  # Redireciona para a lista de cursos se não houver cursos associados
+                return redirect('courses_list')  # Redireciona para a lista de cursos se não houver cursos associados
     else:
         form = MateriaModeloForm(instance=materia)
     return render(request, 'materias_modelo/materias_modelo_edit.html', {'form': form})
 
 def materia_modelo_delete(request, id):
     materia = get_object_or_404(Materia, id=id)
-    courses = materia.course_set.all()  # Obtém todos os cursos associados à matéria
+    course = materia.course_set.all()[0]  # Obtém todos os cursos associados à matéria
     if request.method == "POST":
         materia.delete()
-        if courses:
-            return redirect('course_edit', id=courses[0].id)  # Redireciona para o primeiro curso associado
+        if course:
+            return redirect('course_edit', course.id)  # Redireciona para o primeiro curso associado
         else:
-            return redirect('course_list')  # Redireciona para a lista de cursos se não houver cursos associados
+            return redirect('courses_list')  # Redireciona para a lista de cursos se não houver cursos associados
     return render(request, 'materias_modelo/materia_modelo_confirm_delete.html', {'materia': materia})

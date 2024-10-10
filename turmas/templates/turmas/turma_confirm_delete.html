@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmar Exclusão</title>
+    <title>Excluir Turma</title>
 </head>
 <body>
-    <h1>Tem certeza que deseja deletar a turma "{{ turma.nome }}"?</h1>
+    <h1>Excluir Turma: {{ turma.nome }}</h1>
+    <p>Tem certeza que deseja excluir esta turma?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Confirmar</button>
+        <button type="submit">Sim, excluir</button>
     </form>
-    <a href="{% url 'turma_list' %}">Cancelar</a>
+    <a href="{% url 'course_edit' turma.curso.id %}">Cancelar</a>
 </body>
 </html>

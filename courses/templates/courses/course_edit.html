@@ -34,5 +34,21 @@
             </li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'turma_create' course.id %}">Criar Turma</a>
+
+    <h2>Turmas</h2>
+    <ul>
+        {% for turma in course.turmas.all %}
+            <li>
+                {{ turma.nome }}
+                <form method="post" action="{% url 'turma_delete' turma.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Tem certeza que deseja deletar esta turma?');">Excluir</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
 </body>
 </html>
