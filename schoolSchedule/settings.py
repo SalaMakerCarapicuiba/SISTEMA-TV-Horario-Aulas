@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'horarios',
     'turmas',
     'salas',
+    'materias_modelo',
     #necessário para o allatuth
     'django.contrib.sites',  # Necessário para o Django Allauth
     

@@ -11,4 +11,7 @@ class Turma(models.Model):
     nome = models.CharField(max_length=150)
     semestre = models.IntegerField(validators=[MaxValueValidator(12), MinValueValidator(1)])
     periodo = models.IntegerField(choices=PERIODO)
+
+    def __str__(self):
+        return self.nome
    

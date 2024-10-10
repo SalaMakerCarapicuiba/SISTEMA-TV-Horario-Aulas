@@ -1,6 +1,6 @@
 from django.db import models
 
-from materias.models import Materia
+from materias_modelo.models import Materia
 from professors.models import Professor
 from turmas.models import Turma
 
@@ -9,3 +9,6 @@ class Course(models.Model):
     turmas = models.ManyToManyField(Turma, blank=True)
     materias = models.ManyToManyField(Materia, blank=True)
     professor_coordenador = models.ForeignKey(Professor, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.nome

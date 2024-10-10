@@ -2,45 +2,35 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Course
 from .forms import SelectCourseForm, EditCourseForm, CourseForm
 
-def cadastrar_curso(request):
+def course_create(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('cadastrar_curso')  # Redireciona para uma página de sucesso (você pode personalizar)
+            return redirect('courses_list')  # Redireciona para uma página de sucesso (você pode personalizar)
     else:
         form = CourseForm()
     
-    return render(request, 'courses/cadastrar_curso.html', {'form': form})
+    return render(request, 'courses/course_create.html', {'form': form})
 
-def select_course_view(request):
-    if request.method == 'POST':
-        form = SelectCourseForm(request.POST)
-        if form.is_valid():
-            course_id = form.cleaned_data['course'].id
-            return redirect('edit_course', course_id=course_id)
-    else:
-        form = SelectCourseForm()
-    return render(request, 'courses/select_course.html', {'form': form})
-
-def edit_course_view(request, course_id):
+def course_edit(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
         form = EditCourseForm(request.POST, instance=course)
         if form.is_valid():
             form.save()
-            return redirect('course_list')  # Redirecione para a lista de cursos ou outra página apropriada
+            return redirect('courses_list')  # Redirecione para a lista de cursos ou outra página apropriada
     else:
         form = EditCourseForm(instance=course)
-    return render(request, 'courses/edit_course.html', {'form': form, 'course': course})
+    return render(request, 'courses/course_edit.html', {'form': form, 'course': course})
 
-def delete_course(request, course_id):
+def course_delete(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
         course.delete()
-        return redirect('course_list')  # Redirecionar para a lista de cursos ou outra página de sucesso
-    return render(request, 'delete_course_confirm.html', {'course': course})
+        return redirect('courses_list')  # Redirecionar para a lista de cursos ou outra página de sucesso
+    return render(request, 'course_delete_confirm.html', {'course': course})
 
 def course_list(request):
     courses = Course.objects.all()
-    return render(request, 'courses/course_list.html', {'courses': courses})
+    return render(request, 'courses/courses_list.html', {'courses': courses})
