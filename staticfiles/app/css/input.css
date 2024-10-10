@@ -1,0 +1,27 @@
+input[type="text"]{
+    width: 100%; /* w-full */
+    padding: 0.5rem; /* p-2 */
+    border: 1px solid #D1D5DB; /* border border-gray-300 */
+    border-radius: 0.5rem; /* rounded-lg */
+    background-color: transparent; /* bg-transparent */
+    color: #31312F; /* text-custom1 */
+}
+input[type="password"]{
+    width: 100%; /* w-full */
+    padding: 0.5rem; /* p-2 */
+    border: 1px solid #D1D5DB; /* border border-gray-300 */
+    border-radius: 0.5rem; /* rounded-lg */
+    background-color: transparent; /* bg-transparent */
+    color: #31312F; /* text-custom1 */
+}
+input[type="email"]{
+    width: 100%; /* w-full */
+    padding: 0.5rem; /* p-2 */
+    border: 1px solid #D1D5DB; /* border border-gray-300 */
+    border-radius: 0.5rem; /* rounded-lg */
+    background-color: transparent; /* bg-transparent */
+    color: #31312F; /* text-custom1 */
+}
+input::placeholder {
+    color: #9CA3AF; /* placeholder-gray-400 */
+}

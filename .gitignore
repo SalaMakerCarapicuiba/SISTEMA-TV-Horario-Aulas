@@ -1,1 +1,5 @@
+# Virtualenv
 /venv
+# Remove static files
+staticfiles/admin
+staticfiles/facebook

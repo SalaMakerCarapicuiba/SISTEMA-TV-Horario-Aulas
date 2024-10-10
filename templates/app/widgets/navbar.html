@@ -1,0 +1,42 @@
+<nav class="bg-custom6 p-4 rounded mb-6 flex justify-between items-center">
+  <div>
+    <i class="fa-solid fa-graduation-cap text-custom3"></i>
+    <a href="#" class="text-custom3 font-bold">Assistente</a>
+  </div>
+  <div class="space-x-6">
+    <!-- Salas -->
+    <a href="/salas/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/salas/' %} font-bold {% endif %}">
+       Salas
+    </a>
+
+    <!-- Professores -->
+    <a href="/professors/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/professors/' %} font-bold {% endif %}">
+       Professores
+    </a>
+
+    <!-- Cursos -->
+    <a href="/courses/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/courses/' %} font-bold {% endif %}">
+       Cursos
+    </a>
+
+    <!-- Turmas -->
+    <a href="/turmas/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/turmas/' %} font-bold {% endif %}">
+       Turmas
+    </a>
+
+    <!-- Disciplinas -->
+    <a href="/disciplinas/"
+       class="text-custom3 hover:text-custom2 transition-colors {% if request.path == '/disciplinas/' %} font-bold {% endif %}">
+       Disciplinas
+    </a>
+  </div>
+  <div>
+    <button class="p-2 bg-transparent text-white ">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
+  </div>
+</nav>

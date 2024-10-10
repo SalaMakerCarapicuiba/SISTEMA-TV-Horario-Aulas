@@ -1,56 +1,81 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    {% include "app/custom/imports.html" %}
+    <link rel="stylesheet" href="{% static 'app/css/input.css' %}">    
 </head>
-<body>
-    <div class="wrapper">
-        <form method="post" action="{% url 'account_login' %}">
-            {% csrf_token %}
-            <h2>Login</h2>
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        {% if message.tags == 'success' %}
-                            <li class="{{ message.tags }}"> {{ message }}</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            {% if form.non_field_errors %}
-                <div class="error-messages">
-                    <ul>
-                        {% for error in form.non_field_errors %}
-                            <li>{{ error }}</li>
+<body class="font-montserrat bg-custom3">
+
+    <div class="min-h-screen grid grid-cols-2  rounded-lg shadow-lg overflow-hidden">
+            <!-- Left section -->
+            <div class="p-8 my-auto">
+                <h2 class="text-3xl font-bold mb-6">Entrar no sistema</h2>
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    <!-- Displaying messages -->
+                    {% if messages %}
+                    <ul class="mb-4">
+                        {% for message in messages %}
+                        <li class="text-success">{{ message }}</li>
                         {% endfor %}
                     </ul>
+                    {% endif %}
+
+                    <!-- Non-field errors -->
+                    {% if form.non_field_errors %}
+                    <div class="text-error mb-4">
+                        <ul>
+                            {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <!-- Email or Username Field -->
+                    <div class="mb-4">
+                        <label for="{{ form.login.id_for_label }}" class="block text-custom1">E-mail</label>
+                        {{ form.login }}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-4">
+                        <label for="{{ form.password.id_for_label }}" class="block text-custom1">Senha</label>
+                        {{ form.password }}
+                    </div>
+
+                    <!-- Remember Me and Forgot Password -->
+                    <div class="flex justify-between items-center mb-4">
+                        <label class="flex items-center">
+                            {{ form.remember }}
+                            <span class="ml-2 text-custom1">Lembre de mim</span>
+                        </label>
+                        <a href="{% url 'account_reset_password' %}" class="text-custom6">Esqueceu a senha?</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full py-2 px-4 bg-custom1 text-white font-semibold rounded-lg">Entrar</button>
+                </form>
+
+                <!-- Register -->
+                <div class="mt-6">
+                    <p>Não possui uma conta? <a href="{% url 'account_signup' %}" class="text-custom6">Cadastra-se</a></p>
                 </div>
-            {% endif %}
-            <div class="input-field">
-                {{ form.login }}
-                <label for="{{ form.login.id_for_label }}">Insira seu email ou usuário</label>
             </div>
-            <div class="input-field">
-                {{ form.password }}
-                <label for="{{ form.password.id_for_label }}">Insira sua senha</label>
+
+            <!-- Right section with information -->
+            <div class="flex items-center justify-center bg-custom6 text-white rounded-xl m-8">
+                <div class="text-center">
+                    <h2 class="text-2xl font-semibold">O sistema assistente de gerenciamento</h2>
+                    <p class="mt-2 text-lg">Para a coordenação da FATEC Carapicuíba</p>
+                </div>
             </div>
-            <div class="forget">
-                <label for="remember">
-                    {{ form.remember }}
-                    <p>Lembre de mim</p>
-                </label>
-                <a href="{% url 'account_reset_password' %}">Esqueceu a senha?</a>
-            </div>
-            <button type="submit">Log In</button>
-            <div class="register">
-                <p>Não possui uma conta? <a href="{% url 'account_signup' %}">Registro</a></p>
-            </div>
-        </form>
+
     </div>
+
 </body>
 </html>
