@@ -1,17 +1,88 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Matéria</title>
+    <title>Editar Matéria</title>
+    <script>
+        const horariosPrefixed = {
+            1: ['07:40 - 08:30', '08:30 - 09:20', '09:30 - 10:20', '10:20 - 11:10', '11:20 - 12:10', '12:10 - 13:00'], // Matutino
+            2: ['13:50 - 14:40', '14:50 - 15:40', '15:40 - 16:30', '16:30 - 17:20', '17:20 - 18:10'], // Vespertino
+            3: ['19:00 - 19:50', '19:50 - 20:40', '20:50 - 21:40', '21:40 - 22:30']  // Noturno
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const diasCheckboxes = document.querySelectorAll('input[name="dias_da_semana"]');
+            const horariosContainer = document.getElementById('horarios-container');
+            const periodo = "{{ turma.periodo }}";  // Período da turma vindo do backend
+            const horariosSelecionados = {{ form.instance.horarios_por_dia|default:"{}"|safe }};  // Carrega os horários selecionados
+
+            // Preenche os checkboxes de dias da semana
+            renderHorarios(Object.keys(horariosSelecionados));
+
+            diasCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const selectedDays = Array.from(diasCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+                    renderHorarios(selectedDays);
+                });
+            });
+
+            function renderHorarios(dias) {
+                horariosContainer.innerHTML = '';  // Limpa o conteúdo atual
+                dias.forEach(dia => {
+                    const horarios = horariosPrefixed[periodo];  // Obtém os horários do período da turma
+                    const dayDiv = document.createElement('div');
+                    dayDiv.innerHTML = `<strong>${getDayName(dia)}:</strong>`;
+
+                    horarios.forEach(horario => {
+                        const horarioCheckbox = document.createElement('input');
+                        horarioCheckbox.type = 'checkbox';
+                        horarioCheckbox.name = `horarios_${dia}`;
+                        horarioCheckbox.value = horario;
+
+                        // Verifica se o horário está selecionado
+                        if (horariosSelecionados[dia] && horariosSelecionados[dia].includes(horario)) {
+                            horarioCheckbox.checked = true;
+                        }
+
+                        const horarioLabel = document.createElement('label');
+                        horarioLabel.innerText = horario;
+
+                        dayDiv.appendChild(horarioCheckbox);
+                        dayDiv.appendChild(horarioLabel);
+                        dayDiv.appendChild(document.createElement('br'));
+                    });
+
+                    horariosContainer.appendChild(dayDiv);
+                });
+            }
+
+            function getDayName(dayValue) {
+                const daysMap = {
+                    2: 'Segunda-feira',
+                    3: 'Terça-feira',
+                    4: 'Quarta-feira',
+                    5: 'Quinta-feira',
+                    6: 'Sexta-feira',
+                    7: 'Sábado'
+                };
+                return daysMap[dayValue];
+            }
+        });
+    </script>
 </head>
 <body>
-    <h1>{% if form.instance.pk %}Editar Matéria{% else %}Cadastrar Nova Matéria{% endif %}</h1>
+    <h2>Editar Matéria</h2>
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+
+        <div id="horarios-container">
+            <!-- Horários dinâmicos serão inseridos aqui -->
+        </div>
+
         <button type="submit">Salvar</button>
     </form>
-    <a href="{% url 'materia_list' %}">Cancelar</a>
 </body>
 </html>

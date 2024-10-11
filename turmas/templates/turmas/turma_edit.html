@@ -11,5 +11,15 @@
         <button type="submit">Salvar</button>
     </form>
     <a href="{% url 'course_edit' curso.id %}">Cancelar</a>
+
+    <h2>Matérias</h2>
+    <ul>
+        {% for materia in turma.materias_copy.all %}
+            <li>
+                {{ materia.nome }}
+                <a href="{% url 'materia_update' turma.id materia.id %}">Editar</a>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

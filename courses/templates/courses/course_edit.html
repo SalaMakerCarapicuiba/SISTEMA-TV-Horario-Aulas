@@ -40,16 +40,17 @@
     <h2>Turmas</h2>
     <ul>
         {% for turma in course.turmas.all %}
-        <li>
-            {{ turma.nome }}
-            <a href="{% url 'turma_edit' turma.id %}">Editar</a>
-            <form method="post" action="{% url 'turma_delete' turma.id %}" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" onclick="return confirm('Tem certeza que deseja deletar esta turma?');">Excluir</button>
-            </form>
-        </li>
-    {% endfor %}
+            <li>
+                {{ turma.nome }}
+                <a href="{% url 'turma_edit' turma.id %}">Editar</a>
+                <form method="post" action="{% url 'turma_delete' turma.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Tem certeza que deseja deletar esta turma?');">Excluir</button>
+                </form>
+            </li>
+        {% endfor %}
     </ul>
+    
 
 </body>
 </html>
