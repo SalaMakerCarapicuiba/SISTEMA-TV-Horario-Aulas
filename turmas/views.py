@@ -29,7 +29,7 @@ def turma_edit(request, turma_id):
             return redirect('course_edit', turma.curso.id)  # Redirecionar após editar
     else:
         form = TurmaForm(instance=turma)
-    return render(request, 'turmas/turma_form.html', {'form': form, 'curso': turma.curso})
+    return render(request, 'turmas/turma_edit.html', {'form': form, 'curso': turma.curso})
 
 def turma_delete(request, turma_id):
     turma = get_object_or_404(Turma, id=turma_id)
