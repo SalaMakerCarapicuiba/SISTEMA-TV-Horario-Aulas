@@ -7,5 +7,5 @@ class Sala(models.Model):
     numero = models.IntegerField(validators=[MinValueValidator(0)])
     materias = models.ManyToManyField(Materia, blank=True)  # Relacionamento ManyToMany com blank=True
     
-    
-    
+    def __str__(self):
+        return str(self.numero)
