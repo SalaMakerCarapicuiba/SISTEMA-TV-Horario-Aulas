@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'professors',
     'courses',
     'materias',
-    'horarios',
     'turmas',
     'salas',
     'materias_modelo',

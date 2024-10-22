@@ -66,6 +66,8 @@ class MateriaForm(forms.ModelForm):
         dias = cleaned_data.get('dias_da_semana')
 
         horarios_por_dia = {}
+        if not dias:
+            raise forms.ValidationError("Você deve selecionar pelo menos um horário para os dias escolhidos.")
         for dia in dias:
             horarios = self.data.getlist(f'horarios_{dia}')
             if horarios:

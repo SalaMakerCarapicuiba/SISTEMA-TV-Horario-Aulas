@@ -10,7 +10,7 @@ class Professor(models.Model):
 
     def adicionar_horarios(self, horarios):
         """Adiciona horários ao professor, respeitando o limite máximo de horas."""
-        print(horarios)
+        print('ad horarios', horarios)
         horas_adicionais = horarios * 50 / 60  # Convertendo horários para horas
         if self.horas_atuais + horas_adicionais > self.max_horas:
             raise ValidationError("A soma das horas atuais com as novas horas excede o limite máximo.")
@@ -19,9 +19,11 @@ class Professor(models.Model):
     
     def remover_horarios(self, horarios):
         """Remove horários do professor, garantindo que horas_atuais não fique negativa."""
-        print(horarios)
+        print('horarios: ', horarios)
         horas_removidas = horarios * 50 / 60  # Convertendo horários para horas
-        if self.horas_atuais - horas_removidas < 0:
+        print('horas atuais', self.horas_atuais)
+        print('horas removidas:', horas_removidas)
+        if horas_removidas - self.horas_atuais< 0:
             raise ValidationError("Não é possível remover mais horas do que o total atual.")
         self.horas_atuais -= horas_removidas
         self.save()
