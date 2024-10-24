@@ -8,22 +8,16 @@ class Professor(models.Model):
     max_horas = models.FloatField()
     horas_atuais = models.FloatField(default=0.0)
 
-    def adicionar_horarios(self, horarios):
+    def adicionar_horarios(self, horas_adicionais):
         """Adiciona horários ao professor, respeitando o limite máximo de horas."""
-        print('ad horarios', horarios)
-        horas_adicionais = horarios * 50 / 60  # Convertendo horários para horas
         if self.horas_atuais + horas_adicionais > self.max_horas:
             raise ValidationError("A soma das horas atuais com as novas horas excede o limite máximo.")
         self.horas_atuais += horas_adicionais
         self.save()
-    
-    def remover_horarios(self, horarios):
+
+    def remover_horarios(self, horas_removidas):
         """Remove horários do professor, garantindo que horas_atuais não fique negativa."""
-        print('horarios: ', horarios)
-        horas_removidas = horarios * 50 / 60  # Convertendo horários para horas
-        print('horas atuais', self.horas_atuais)
-        print('horas removidas:', horas_removidas)
-        if horas_removidas - self.horas_atuais< 0:
+        if self.horas_atuais - horas_removidas < 0:
             raise ValidationError("Não é possível remover mais horas do que o total atual.")
         self.horas_atuais -= horas_removidas
         self.save()

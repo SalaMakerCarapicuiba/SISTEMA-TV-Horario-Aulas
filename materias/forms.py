@@ -83,23 +83,29 @@ class MateriaForm(forms.ModelForm):
         instance = super().save(commit=False)
         horarios_por_dia = self.cleaned_data['horarios_por_dia']
         
-        # Verificar se um professor foi selecionado
         if instance.professor:
             try:
                 # Subtrair as horas atuais do professor
                 if instance.pk:  # Verifica se a instância já existe
-                    horarios_atuais = instance.horarios_por_dia
+                    horarios_atuais = instance.horarios_por_dia or {}
                     total_horas_atuais = sum(len(horarios) for horarios in horarios_atuais.values())
-                    print(total_horas_atuais)
-                    instance.professor.remover_horarios(total_horas_atuais)
 
+                    if total_horas_atuais > 0:
+                        # Verifica se o professor tem horas suficientes para serem removidas
+                        if total_horas_atuais <= instance.professor.horas_atuais:
+                            instance.professor.remover_horarios(total_horas_atuais)
+                        else:
+                            raise ValidationError(f"O professor não possui horas suficientes para remover ({total_horas_atuais} horas).")
+                
                 # Adicionar as novas horas ao professor
                 total_horas_novas = sum(len(horarios) for horarios in horarios_por_dia.values())
                 instance.professor.adicionar_horarios(total_horas_novas)
+            
             except ValidationError as e:
                 self.add_error('professor', e.message)
                 raise
 
+        # Atualiza os horários por dia da instância
         instance.horarios_por_dia = horarios_por_dia
 
         if commit:
