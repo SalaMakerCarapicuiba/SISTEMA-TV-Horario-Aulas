@@ -1,25 +1,92 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editar Turma</title>
-</head>
-<body>
-    <h1>Editar Turma</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar</button>
-    </form>
-    <a href="{% url 'course_edit' curso.id %}">Cancelar</a>
 
-    <h2>Matérias</h2>
-    <ul>
-        {% for materia in turma.materias_copy.all %}
-            <li>
+    {% include "app/custom/imports.html" %}
+  </head>
+  <body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+    <section class="min-h-screen flex flex-col p-4">
+      <!-- Navbar -->
+      {% include "app/widgets/navbar.html" %}
+
+      <!-- Conteúdo principal -->
+      <div class="flex-grow flex flex-col p-4">
+        <div
+          class="bg-transparent border border-custom6 rounded-lg p-6 gap-8 flex-grow flex flex-col"
+        >
+          <div class="flex justify-between mb-4">
+            <h1 class="text-2xl font-bold text-custom1">
+              Editar turma: {{ turma.nome }}
+            </h1>
+            <a
+              href="{% url 'course_edit' curso.id %}"
+              class="text-blue-700 hover:underline"
+            >
+              &#8592; Voltar
+            </a>
+          </div>
+          <p class="text-sm text-custom1 mb-6">
+            Realize aqui a edição das turmas de um curso.
+          </p>
+
+          <!-- Formulário -->
+          <form method="post" class="flex flex-col gap-3">
+            {% csrf_token %} {{ form.as_p }}
+            <button
+              type="submit"
+              class="justify-center self-center w-full max-w-[350px] bg-custom6 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-800"
+            >
+              Salvar
+            </button>
+          </form>
+
+          <!-- Matérias do curso -->
+          <section class="flex flex-col gap-4">
+            <h2 class="text-xl border-b-2 border-custom6 py-3 mb-4">
+              Matérias da turma
+            </h2>
+
+            <ul class="flex flex-col gap-4">
+              {% for materia in turma.materias_copy.all %}
+              <li
+                class="flex-1 flex gap-4 items-center justify-between max-h-[45px]"
+              >
                 {{ materia.nome }}
-                <a href="{% url 'materia_update' turma.id materia.id %}">Editar</a>
-            </li>
-        {% endfor %}
-    </ul>
-</body>
+
+                <div class="max-h-full flex gap-4">
+                  <a
+                    href="{% url 'materia_update' turma.id materia.id %}"
+                    class="bg-custom6 min-h-full text-white p-2 rounded hover:bg-custom2 transition-colors"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Editar
+                  </a>
+
+                  <form
+                    method="post"
+                    action="{% url 'materia_modelo_delete' materia.id %}"
+                    style="display: inline"
+                  >
+                    {% csrf_token %}
+                    <button
+                      type="submit"
+                      onclick="return confirm('Tem certeza que deseja deletar esta matéria?');"
+                      class="bg-error min-h-full text-white p-2 rounded hover:bg-custom2 transition-colors"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                      Excluir
+                    </button>
+                  </form>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

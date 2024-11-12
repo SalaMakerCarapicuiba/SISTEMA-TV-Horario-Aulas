@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lista de Cursos</title>
+    <title>Listar Turmas</title>
     {% include "app/custom/imports.html" %}
   </head>
   <body class="font-montserrat bg-background text-custom1">
@@ -13,10 +13,10 @@
 
       <!-- Title and Description -->
       <div class="mb-6">
-        <h1 class="text-2xl font-bold">Cursos</h1>
+        <h1 class="text-2xl font-bold">Turmas</h1>
         <p class="text-custom2">
-          Lide com as disponibilidades de todos os cursos cadastrados, altere
-          seus dados e cadastre novos.
+          Lide com as disponibilidades de todas as turmas cadastrados, altere
+          seus dados e cadastre novas.
         </p>
       </div>
 
@@ -37,7 +37,7 @@
       <div class="flex justify-between items-center mb-4">
         <input
           type="text"
-          placeholder="Pesquisar por cursos"
+          placeholder="Pesquisar por turmas"
           class="border border-custom5 p-2 rounded w-1/3 focus:outline-none focus:ring-2 focus:ring-custom1 transition-all"
         />
         <div class="space-x-4">
@@ -50,70 +50,50 @@
           <select
             class="border border-custom5 p-2 rounded focus:outline-none focus:ring-2 focus:ring-custom1 transition-all"
           >
-            <option>Disciplina: Selecionar</option>
+            <option>Período: Selecionar</option>
           </select>
-          <a
-            href="{% url 'course_create' %}"
-            class="p-2 bg-custom6 text-white rounded hover:bg-custom2 transition-colors"
-            >Cadastrar novo curso</a
-          >
         </div>
       </div>
-
       <!-- Table -->
-      <table class="min-w-full bg-custom3 rounded-lg overflow-hidden flex-1">
+      <table class="min-w-full bg-custom3 rounded-lg overflow-hidden">
         <thead>
           <tr class="text-left text-custom1 bg-custom5">
             <th class="p-3">Nome</th>
-            <th class="p-3">Total de turmas no curso</th>
-            <th class="p-3">Coordenador do curso</th>
+            <th class="p-3">Semestre</th>
+            <!-- TODO: -->
+            <!-- <th class="p-3">Horário</th> -->
+            <th class="p-3">Período</th>
             <th class="p-3">Opções</th>
           </tr>
         </thead>
 
+        <!-- TODO: -->
         <tbody class="bg-white">
-          {% for course in courses %}
+          {% for turma in turmas %}
           <tr class="border-b border-custom4 hover:bg-custom4 transition-all">
             <td class="p-3 underline">
-              <a href="{% url 'course_edit' course.id %}">{{course.nome}}</a>
+              <a href="{% url 'turma_edit' turma.id %}">{{turma.nome}}</a>
             </td>
-            <td class="p-3">{{course.turma_count}}</td>
+            <td class="p-3">{{ turma.semestre }}</td>
+            <!-- TODO:  -->
+            <!-- <td class="p-3">{{turma.horario}}</td> -->
             <td class="p-3">
-              {% if course.professor_coordenador %}
-                  {{ course.professor_coordenador }}
-              {% else %}
-                  Nenhum professor atribuído
-              {% endif %}
-          </td>
+              {% if turma.periodo == 1 %} Matutino {% elif turma.periodo == 2 %}
+              Vespertino {% elif turma.periodo == 3 %} Noturno {% else %}
+              Desconhecido {% endif %}
+            </td>
             <td class="p-3">
-                <form 
-                  method="post" 
-                  action="{% url 'course_delete' course.id %}" 
-                  style="display:inline;"  
-                >
-                  {% csrf_token %}
-                  <button 
-                    type="submit" 
-                    onclick="return confirm('Tem certeza que deseja deletar este curso?');"
-                    class="bg-error text-white p-2 rounded hover:bg-custom2 transition-colors"
-                  >
-                    <i class="fa-solid fa-trash"></i>
-                    Excluir
-                  </button>
-                </form>
-  
-                <a
-                  href="{% url 'course_edit' course.id %}"
-                  class="bg-custom6 text-white p-2 rounded hover:bg-custom2 transition-colors"
-                  ><i class="fa-solid fa-pen-to-square"></i>
-                  Editar
-                </a>
+              <a
+                href="{% url 'turma_edit' turma.id %}"
+                class="bg-custom6 text-white p-2 rounded hover:bg-custom2 transition-colors"
+                >Editar <i class="fa-solid fa-pen-to-square"></i
+              ></a>
             </td>
           </tr>
           {% empty %}
           <tr class="border-b border-custom4">
             <td colspan="5" class="p-3 text-center text-custom2">
-              Nenhum curso cadastrado.
+              Nenhuma turma cadastrada.
             </td>
           </tr>
           {% endfor %}

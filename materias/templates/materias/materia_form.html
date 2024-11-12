@@ -1,88 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editar Matéria</title>
+    {% include "app/custom/imports.html" %}
     <script>
-        const horariosPrefixed = {
-            1: ['07:40 - 08:30', '08:30 - 09:20', '09:30 - 10:20', '10:20 - 11:10', '11:20 - 12:10', '12:10 - 13:00'], // Matutino
-            2: ['13:50 - 14:40', '14:50 - 15:40', '15:40 - 16:30', '16:30 - 17:20', '17:20 - 18:10'], // Vespertino
-            3: ['19:00 - 19:50', '19:50 - 20:40', '20:50 - 21:40', '21:40 - 22:30']  // Noturno
-        };
+      const horariosPrefixed = {
+          1: ['07:40 - 08:30', '08:30 - 09:20', '09:30 - 10:20', '10:20 - 11:10', '11:20 - 12:10', '12:10 - 13:00'], // Matutino
+          2: ['13:50 - 14:40', '14:50 - 15:40', '15:40 - 16:30', '16:30 - 17:20', '17:20 - 18:10'], // Vespertino
+          3: ['19:00 - 19:50', '19:50 - 20:40', '20:50 - 21:40', '21:40 - 22:30']  // Noturno
+      };
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const diasCheckboxes = document.querySelectorAll('input[name="dias_da_semana"]');
-            const horariosContainer = document.getElementById('horarios-container');
-            const periodo = "{{ turma.periodo }}";  // Período da turma vindo do backend
-            const horariosSelecionados = {{ form.instance.horarios_por_dia|default:"{}"|safe }};  // Carrega os horários selecionados
+      document.addEventListener('DOMContentLoaded', function () {
+          const diasCheckboxes = document.querySelectorAll('input[name="dias_da_semana"]');
+          const horariosContainer = document.getElementById('horarios-container');
+          const periodo = "{{ turma.periodo }}";  // Período da turma vindo do backend
+          const horariosSelecionados = {{ form.instance.horarios_por_dia|default:"{}"|safe }};  // Carrega os horários selecionados
 
-            // Preenche os checkboxes de dias da semana
-            renderHorarios(Object.keys(horariosSelecionados));
+          // Preenche os checkboxes de dias da semana
+          renderHorarios(Object.keys(horariosSelecionados));
 
-            diasCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    const selectedDays = Array.from(diasCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
-                    renderHorarios(selectedDays);
-                });
-            });
+          diasCheckboxes.forEach(checkbox => {
+              checkbox.addEventListener('change', function () {
+                  const selectedDays = Array.from(diasCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+                  renderHorarios(selectedDays);
+              });
+          });
 
-            function renderHorarios(dias) {
-                horariosContainer.innerHTML = '';  // Limpa o conteúdo atual
-                dias.forEach(dia => {
-                    const horarios = horariosPrefixed[periodo];  // Obtém os horários do período da turma
-                    const dayDiv = document.createElement('div');
-                    dayDiv.innerHTML = `<strong>${getDayName(dia)}:</strong>`;
+          function renderHorarios(dias) {
+              horariosContainer.innerHTML = '';  // Limpa o conteúdo atual
+              dias.forEach(dia => {
+                  const horarios = horariosPrefixed[periodo];  // Obtém os horários do período da turma
+                  const dayDiv = document.createElement('div');
+                  dayDiv.innerHTML = `<strong>${getDayName(dia)}:</strong>`;
 
-                    horarios.forEach(horario => {
-                        const horarioCheckbox = document.createElement('input');
-                        horarioCheckbox.type = 'checkbox';
-                        horarioCheckbox.name = `horarios_${dia}`;
-                        horarioCheckbox.value = horario;
+                  horarios.forEach(horario => {
+                      const horarioCheckbox = document.createElement('input');
+                      horarioCheckbox.type = 'checkbox';
+                      horarioCheckbox.name = `horarios_${dia}`;
+                      horarioCheckbox.value = horario;
 
-                        // Verifica se o horário está selecionado
-                        if (horariosSelecionados[dia] && horariosSelecionados[dia].includes(horario)) {
-                            horarioCheckbox.checked = true;
-                        }
+                      // Verifica se o horário está selecionado
+                      if (horariosSelecionados[dia] && horariosSelecionados[dia].includes(horario)) {
+                          horarioCheckbox.checked = true;
+                      }
 
-                        const horarioLabel = document.createElement('label');
-                        horarioLabel.innerText = horario;
+                      const horarioLabel = document.createElement('label');
+                      horarioLabel.innerText = horario;
 
-                        dayDiv.appendChild(horarioCheckbox);
-                        dayDiv.appendChild(horarioLabel);
-                        dayDiv.appendChild(document.createElement('br'));
-                    });
+                      dayDiv.appendChild(horarioCheckbox);
+                      dayDiv.appendChild(horarioLabel);
+                      dayDiv.appendChild(document.createElement('br'));
+                  });
 
-                    horariosContainer.appendChild(dayDiv);
-                });
-            }
+                  horariosContainer.appendChild(dayDiv);
+              });
+          }
 
-            function getDayName(dayValue) {
-                const daysMap = {
-                    2: 'Segunda-feira',
-                    3: 'Terça-feira',
-                    4: 'Quarta-feira',
-                    5: 'Quinta-feira',
-                    6: 'Sexta-feira',
-                    7: 'Sábado'
-                };
-                return daysMap[dayValue];
-            }
-        });
+          function getDayName(dayValue) {
+              const daysMap = {
+                  2: 'Segunda-feira',
+                  3: 'Terça-feira',
+                  4: 'Quarta-feira',
+                  5: 'Quinta-feira',
+                  6: 'Sexta-feira',
+                  7: 'Sábado'
+              };
+              return daysMap[dayValue];
+          }
+      });
     </script>
-</head>
-<body>
-    <h2>Editar Matéria</h2>
+  </head>
+  <body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+    <section class="min-h-screen flex flex-col p-4">
+      <!-- Navbar -->
+      {% include "app/widgets/navbar.html" %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+      <!-- Conteúdo principal -->
+      <div class="flex-grow flex flex-col p-4">
+        <div
+          class="bg-transparent border border-custom6 rounded-lg p-6 gap-8 flex-grow flex flex-col"
+        >
+          <div class="flex justify-between mb-4">
+            <h1 class="text-2xl font-bold text-custom1">
+              Editar matéria: {{ materia.nome }}
+            </h1>
+            <a
+              href="{% url 'turma_edit' turma.id %}"
+              class="text-blue-700 hover:underline"
+            >
+              &#8592; Voltar
+            </a>
+          </div>
+          <p class="text-custom1 mb-1">
+            Realize aqui a edição das matérias de uma turma.
+          </p>
 
-        <div id="horarios-container">
-            <!-- Horários dinâmicos serão inseridos aqui -->
+          <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Campo de Nome -->
+            <div class="form-group">
+              <label
+                for="{{ form.nome.id_for_label }}"
+                class="block font-medium text-custom1 mb-1"
+                >Matéria</label
+              >
+              {{ form.nome }} {% if form.nome.errors %}
+              <div class="text-red-500 mt-1">{{ form.nome.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Campo de Dias da Semana -->
+            <div class="form-group">
+              <label class="block font-medium text-custom1 mb-1"
+                >Dias da Semana</label
+              >
+              <div class="flex flex-wrap gap-4">
+                {% for checkbox in form.dias_da_semana %}
+                <div class="flex items-center space-x-2">
+                  {{ checkbox.tag }}
+                  <label class="text-custom1 cursor-pointer"
+                    >{{ checkbox.choice_label }}</label
+                  >
+                </div>
+                {% endfor %}
+              </div>
+              {% if form.dias_da_semana.errors %}
+              <div class="text-red-500 mt-1">
+                {{ form.dias_da_semana.errors }}
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Campo de Professor -->
+            <div class="form-group">
+              <label
+                for="{{ form.professor.id_for_label }}"
+                class="block font-medium text-custom1 mb-1"
+                >Professor</label
+              >
+              {{ form.professor }} {% if form.professor.errors %}
+              <div class="text-red-500 mt-1">{{ form.professor.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Campo de Sala -->
+            <div class="form-group">
+              <label
+                for="{{ form.sala.id_for_label }}"
+                class="block font-medium text-custom1 mb-1"
+                >Sala</label
+              >
+              {{ form.sala }} {% if form.sala.errors %}
+              <div class="text-red-500 mt-1">{{ form.sala.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Container para Horários -->
+            <div id="horarios-container" class="mt-1">
+              <!-- Horários dinâmicos serão inseridos aqui -->
+            </div>
+
+            <!-- Botão de Salvar -->
+            <button
+              type="submit"
+              class="justify-center self-center w-full max-w-[350px] bg-custom6 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-800"
+            >
+              Salvar
+            </button>
+          </form>
+
+          <!-- <form method="post">
+            {% csrf_token %} {{ form.as_p }}
+
+            <div id="horarios-container">
+              <!-- Horários dinâmicos serão inseridos aqui -->
+          <!-- </div>
+
+            <button type="submit">Salvar</button>
+          </form> -->
         </div>
-
-        <button type="submit">Salvar</button>
-    </form>
-</body>
+      </div>
+    </section>
+  </body>
 </html>

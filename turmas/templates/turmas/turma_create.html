@@ -1,17 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Criar Turma</title>
-</head>
-<body>
-    <h1>Criar Turma</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar</button>
-    </form>
+    {% include "app/custom/imports.html" %}
+  </head>
+  <body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+    <section class="min-h-screen flex flex-col p-4">
+      {% include "app/widgets/navbar.html" %}
 
-</body>
+      <div class="flex-grow flex flex-col p-4">
+        <!-- Cadastro de turmas -->
+        <div
+          class="bg-transparent border border-custom6 rounded-lg p-6 flex-grow flex flex-col"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold text-custom1">Cadastro de turma</h1>
+            <a
+              href="{% url 'courses_list' %}"
+              class="text-blue-700 hover:underline"
+            >
+              &#8592; Voltar
+            </a>
+          </div>
+          <p class="text-sm text-custom1 mb-6">
+            Realize aqui o cadastro de novas turmas da FATEC.
+          </p>
+
+          <!-- Formulário -->
+          <form method="post" class="flex-grow flex flex-col gap-6">
+            {% csrf_token %}
+
+            <div
+              class="grid grid-cols-2 gap-x-12 gap-y-6 flex-grow max-h-[200px]"
+            >
+              {{ form.as_p }}
+            </div>
+
+            <div class="flex self-end items-center mt-6">
+              <button
+                type="submit"
+                class="bg-custom6 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-800"
+              >
+                Salvar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

@@ -24,12 +24,24 @@ def course_edit(request, course_id):
         form = EditCourseForm(instance=course)
     return render(request, 'courses/course_edit.html', {'form': form, 'course': course})
 
+# def course_delete(request, course_id):
+#     course = get_object_or_404(Course, id=course_id)
+
+#     if request.method == 'POST':
+#         curso_id = course.curso.id
+#         course.delete()
+#         return redirect('courses_list', curso_id)  # Redirecionar após deletar
+#     return render(request, 'courses/course_confirm_delete.html', {'course': course})
+
 def course_delete(request, course_id):
     course = get_object_or_404(Course, id=course_id)
+
     if request.method == 'POST':
         course.delete()
-        return redirect('courses_list')  # Redirecionar para a lista de cursos ou outra página de sucesso
-    return render(request, 'course_delete_confirm.html', {'course': course})
+        return redirect('courses_list')  # Redireciona para a lista de cursos
+
+    return render(request, 'courses/course_confirm_delete.html', {'course': course})
+
 
 def course_list(request):
     courses = Course.objects.all()

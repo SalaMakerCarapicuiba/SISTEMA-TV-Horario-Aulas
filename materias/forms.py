@@ -26,6 +26,12 @@ class MateriaForm(forms.ModelForm):
         model = Materia
         fields = ['nome', 'dias_da_semana', 'professor', 'sala']  # Adicionado 'sala' aos campos do formulário
 
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400',
+            }),
+        }
+
     def __init__(self, *args, **kwargs):
         self.turma = kwargs.pop('turma', None)
         super().__init__(*args, **kwargs)

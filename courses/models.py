@@ -11,3 +11,7 @@ class Course(models.Model):
 
     def __str__(self):
         return self.nome
+
+    @property
+    def turma_count(self):
+        return self.turmas.count()

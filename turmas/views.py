@@ -6,7 +6,6 @@ from courses.models import Course
 from turmas.forms import TurmaForm
 from .models import Turma
 
-
 def turma_create(request, course_id):
     curso = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
@@ -37,4 +36,11 @@ def turma_delete(request, turma_id):
         curso_id = turma.curso.id
         turma.delete()
         return redirect('course_edit', curso_id)  # Redirecionar após deletar
-    return render(request, 'turmas/turma_confirm_delete.html', {'turma': turma})
+    # return render(request, 'turmas/turma_confirm_delete.html', {'turma': turma})
+    return redirect('courses_list')
+
+def turma_list(request):
+    turmas = Turma.objects.all()
+    # Obtendo o course_id de uma turma caso exista ao menos uma
+    course_id = turmas.first().curso.id if turmas.exists() else None
+    return render(request, 'turmas/turma_list.html', {'turmas': turmas, 'course_id': course_id})

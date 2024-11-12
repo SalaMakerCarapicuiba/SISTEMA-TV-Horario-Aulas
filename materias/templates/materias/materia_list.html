@@ -1,17 +1,155 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Matérias</title>
-</head>
-<body>
-    <h1>Lista de Matérias</h1>
-    <ul>
-        {% for materia in materias %}
-            <li>{{ materia.nome }} - <a href="{% url 'materia_update' materia.pk %}">Editar</a> - <a href="{% url 'materia_delete' materia.pk %}">Excluir</a></li>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listar Disciplinas</title>
+    {% include "app/custom/imports.html" %}
+  </head>
+  <body class="font-montserrat bg-background text-custom1">
+    <div class="min-h-screen p-4">
+      <!-- Navbar -->
+      {% include "app/widgets/navbar.html" %}
+
+      <!-- Title and Description -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold">Disciplinas</h1>
+        <p class="text-custom2">
+          Veja as materias cadastradas no sistema e altere seus dados, conforme
+          necessário.
+        </p>
+      </div>
+
+      <!-- Feedback Messages -->
+      {% if messages %}
+      <ul class="mb-4">
+        {% for message in messages %}
+        <li
+          class="p-4 rounded-lg mb-2 {% if message.tags == 'success' %} bg-success text-white {% elif message.tags == 'warning' %} bg-warning text-white {% elif message.tags == 'error' %} bg-error text-white {% endif %}"
+        >
+          {{ message }}
+        </li>
         {% endfor %}
-    </ul>
-    <a href="{% url 'materia_create' %}">Cadastrar Nova Matéria</a>
-</body>
+      </ul>
+      {% endif %}
+
+      <!-- Search and Filters -->
+      <div class="flex justify-between items-center mb-4">
+        <input
+          type="text"
+          placeholder="Pesquisar por matérias"
+          class="border border-custom5 p-2 rounded w-1/3 focus:outline-none focus:ring-2 focus:ring-custom1 transition-all"
+        />
+        <div class="space-x-4">
+          <select
+            class="border border-custom5 p-2 rounded focus:outline-none focus:ring-2 focus:ring-custom1 transition-all"
+          >
+            <option>Ordenação: A-Z</option>
+            <option>Ordenação: Z-A</option>
+          </select>
+          <select
+            class="border border-custom5 p-2 rounded focus:outline-none focus:ring-2 focus:ring-custom1 transition-all"
+          >
+            <option>Período: Selecionar</option>
+          </select>
+        </div>
+      </div>
+      <!-- Table -->
+      <table class="min-w-full bg-custom3 rounded-lg overflow-hidden">
+        <thead>
+          <tr class="text-left text-custom1 bg-custom5">
+            <th class="p-3">Nome da disciplina</th>
+            <th class="p-3">Professor</th>
+            <th class="p-3">Horário</th>
+            <th class="p-3">Semestre</th>
+            <th class="p-3">Opções</th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white">
+          {% for materia in materias %}
+          <tr class="border-b border-custom4 hover:bg-custom4 transition-all">
+            <td class="p-3 underline">
+              <a href="{% url 'materia_modelo_edit' materia.id %}"
+                >{{materia.nome}}</a
+              >
+            </td>
+            <td class="p-3">
+              {% if materia.professor %}
+                  {{ materia.professor }}
+              {% else %}
+                  Nenhum professor cadastrado
+              {% endif %}
+          </td>
+            <td class="p-3">
+              {% for dia, horarios in materia.horarios_por_dia.items %}
+              <p>
+                <strong>{{ dia|date:"l" }}</strong> {{ horarios|join:", " }}
+              </p>
+              {% empty %}
+              <p>Nenhum horário definido.</p>
+              {% endfor %}
+            </td>
+            <td class="p-3">{{ materia.semestre }}</td>
+            <td class="p-3">
+              <a
+                href="{% url 'materia_modelo_edit' materia.id %}"
+                class="bg-custom6 text-white p-2 rounded hover:bg-custom2 transition-colors"
+                >Editar <i class="fa-solid fa-pen-to-square"></i
+              ></a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr class="border-b border-custom4">
+            <td colspan="5" class="p-3 text-center text-custom2">
+              Nenhuma materia cadastrada.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="flex justify-end items-center mt-4 gap-x-2.5">
+        <button
+          class="p-2 bg-custom2 text-white rounded hover:bg-custom1 transition-colors"
+        >
+          Voltar
+        </button>
+        <div class="space-x-2">
+          <button
+            class="p-2 bg-custom1 text-white rounded hover:bg-custom2 transition-colors"
+          >
+            1
+          </button>
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
+            2
+          </button>
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
+            3
+          </button>
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
+            ...
+          </button>
+          <button
+            class="p-2 bg-custom3 text-custom1 rounded hover:bg-custom2 transition-colors"
+          >
+            12
+          </button>
+        </div>
+        <button
+          class="p-2 bg-custom2 text-white rounded hover:bg-custom1 transition-colors"
+        >
+          Próximo
+        </button>
+      </div>
+    </div>
+
+  </body>
 </html>

@@ -1,17 +1,87 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Curso</title>
+
+    {% include "app/custom/imports.html" %}
 </head>
-<body>
-    <h1>Cadastrar Novo Curso</h1>
-    
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Cadastrar</button>
-    </form>
+<body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+  <section class="min-h-screen flex flex-col p-4">
+    <!-- Navbar -->
+    {% include "app/widgets/navbar.html" %}
+
+    <!-- Conteúdo principal -->
+    <div class="flex-grow flex flex-col p-4">
+      <div
+        class="bg-transparent border border-custom6 rounded-lg p-6 flex-grow flex flex-col"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-2xl font-bold text-custom1">
+            Cadastrar novo curso
+          </h1>
+          <a
+            href="{% url 'courses_list' %}"
+            class="text-blue-700 hover:underline"
+          >
+            &#8592; Voltar
+          </a>
+        </div>
+        <p class="text-sm text-custom1 mb-6">
+          Realize aqui o cadastro de novos cursos lecionados na FATEC.
+        </p>
+
+        <!-- Formulário -->
+        <form
+          method="post"
+          class="space-y-6 flex-grow flex flex-col justify-between"
+        >
+          {% csrf_token %}
+
+          <div
+            class="grid grid-cols-2 gap-x-12 gap-y-6 flex-grow max-h-[200px]"
+          >
+            <div class="form-group">
+              <label
+                for="{{ form.nome.id_for_label }}"
+                class="block text-sm font-medium text-custom1 mb-1"
+              >
+                Nome do curso <span class="text-red-500">*</span>
+              </label>
+              {{ form.nome }} {% if form.nome.errors %}
+              <div class="text-red-500 text-sm mt-1">
+                {{ form.nome.errors }}
+              </div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label
+                for="{{ form.professor_coordenador.id_for_label }}"
+                class="block text-sm font-medium text-custom1 mb-1"
+              >
+                Coordenador do curso <span class="text-red-500">*</span>
+              </label>
+              {{ form.professor_coordenador }} {% if form.professor_coordenador.errors %}
+              <div class="text-red-500 text-sm mt-1">
+                {{ form.professor_coordenador.errors }}
+              </div>
+              {% endif %}
+            </div>
+          
+          <!-- Botões de ação -->
+          <div class="flex justify-end col-span-2 items-center mt-6">
+            <button
+              type="submit"
+              class="bg-custom6 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-800"
+            >
+              Salvar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
