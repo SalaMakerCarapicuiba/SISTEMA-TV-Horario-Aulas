@@ -14,7 +14,7 @@ DIAS_DA_SEMANA = [
 ]
 
 class MateriaForm(forms.ModelForm):
-    dias_da_semana = forms.MultipleChoiceField(choices=DIAS_DA_SEMANA, widget=forms.CheckboxSelectMultiple)
+    dias_da_semana = forms.MultipleChoiceField(choices=DIAS_DA_SEMANA, widget=forms.CheckboxSelectMultiple, required=False)
     
     # Campo de seleção para o professor
     professor = forms.ModelChoiceField(queryset=Professor.objects.all(), required=False, label="Professor", empty_label="Selecione um professor")
@@ -72,15 +72,15 @@ class MateriaForm(forms.ModelForm):
         dias = cleaned_data.get('dias_da_semana')
 
         horarios_por_dia = {}
-        if not dias:
-            raise forms.ValidationError("Você deve selecionar pelo menos um horário para os dias escolhidos.")
-        for dia in dias:
-            horarios = self.data.getlist(f'horarios_{dia}')
-            if horarios:
-                horarios_por_dia[dia] = horarios
+        if dias:
+        #    raise forms.ValidationError("Você deve selecionar pelo menos um horário para os dias escolhidos.")
+            for dia in dias:
+                horarios = self.data.getlist(f'horarios_{dia}')
+                if horarios:
+                    horarios_por_dia[dia] = horarios
 
-        if not horarios_por_dia:
-            raise forms.ValidationError("Você deve selecionar pelo menos um horário para os dias escolhidos.")
+        #if not horarios_por_dia:
+        #    raise forms.ValidationError("Você deve selecionar pelo menos um horário para os dias escolhidos.")
 
         self.cleaned_data['horarios_por_dia'] = horarios_por_dia
         return cleaned_data

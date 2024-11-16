@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.apps import apps
 from materias.models import Materia
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 class Turma(models.Model):
@@ -21,10 +21,11 @@ class Turma(models.Model):
     def _str_(self):
         return self.nome
 
-    def delete(self, *args, **kwargs):
-        # Remove todas as matérias copiadas antes de deletar a turma
-        self.materias_copy.all().delete()
-        super().delete(*args, **kwargs)
+@receiver(pre_delete, sender=Turma)
+def deletar_materias_associadas(sender, instance, **kwargs):
+    # Deletar todas as matérias copiadas associadas à turma
+    for materia in instance.materias_copy.all():
+        materia.delete()
 
 
 # Signal para criar matérias baseadas em modelo

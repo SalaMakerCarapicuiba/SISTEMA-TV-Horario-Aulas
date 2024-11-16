@@ -11,7 +11,7 @@ class Materia(models.Model):
 
     
     # Campo JSON para armazenar os horários por dia da semana
-    horarios_por_dia = models.JSONField(default=dict)  # Ex: {"2": ["08:00-10:00"], "3": ["14:00-16:00"]}
+    horarios_por_dia = models.JSONField(default=dict, blank=True, null=True)  # Ex: {"2": ["08:00-10:00"], "3": ["14:00-16:00"]}
     
     def __str__(self):
         return self.nome
