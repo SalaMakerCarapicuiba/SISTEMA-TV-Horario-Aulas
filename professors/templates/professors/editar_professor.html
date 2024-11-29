@@ -102,15 +102,18 @@
                   for="{{ form.materias.id_for_label }}"
                   class="block text-sm font-medium text-custom1 mb-1"
                 >
-                  Materias <span class="text-red-500">*</span>
+                  Matérias <span class="text-red-500">*</span>
                 </label>
-                {{ form.materias }} {% if form.materias.errors %}
+                <div class="space-y-2">
+                  {{ form.materias }}
+                </div>
+                {% if form.materias.errors %}
                 <div class="text-red-500 text-sm mt-1">
-                  {{ form.disciplina.errors }}
+                  {{ form.materias.errors }}
                 </div>
                 {% endif %}
               </div>
-            </div>
+              
             
             <!-- Botões de ação -->
             <div class="flex justify-between items-center mt-6">
