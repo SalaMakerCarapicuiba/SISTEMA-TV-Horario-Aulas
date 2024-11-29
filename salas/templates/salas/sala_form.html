@@ -22,12 +22,12 @@
                         </label>
                         {{ form.numero }}
                     </div>
-                    <div>
+                    {% comment %} <div>
                         <label for="{{ form.materias.id_for_label }}" class="block text-sm font-medium text-custom1 mb-1">
                             Matérias
                         </label>
                         {{ form.materias }}
-                    </div>
+                    </div> {% endcomment %}
                 </div>
                 <div class="flex justify-between items-center mt-6">
                     <a href="{% url 'sala_list' %}" class="text-blue-700 hover:underline">Cancelar</a>
