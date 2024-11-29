@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Exclusão</title>
+    {% include "app/custom/imports.html" %}
 </head>
-<body>
-    <h1>Tem certeza que deseja deletar a sala {{ sala.numero }}?</h1>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Confirmar</button>
-    </form>
-    <a href="{% url 'sala_list' %}">Cancelar</a>
+<body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+    <section class="min-h-screen flex flex-col p-4">
+        {% include "app/widgets/navbar.html" %}
+        <div class="bg-transparent border border-custom6 rounded-lg p-6">
+            <h1 class="text-2xl font-bold mb-4">Confirmar Exclusão</h1>
+            <p class="text-sm text-custom1 mb-6">
+                Tem certeza que deseja excluir a sala <strong>{{ sala.numero }}</strong>?
+            </p>
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div class="flex justify-between items-center">
+                    <a href="{% url 'sala_list' %}" class="text-blue-700 hover:underline">Cancelar</a>
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                        Confirmar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 </body>
 </html>

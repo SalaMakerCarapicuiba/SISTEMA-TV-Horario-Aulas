@@ -8,9 +8,8 @@
   </head>
   <body class="font-montserrat bg-background text-custom1">
     <div class="min-h-screen p-4">
-    <!-- Navbar -->
-    {% include "app/widgets/navbar.html" %}
-     
+      <!-- Navbar -->
+      {% include "app/widgets/navbar.html" %}
 
       <!-- Title and Description -->
       <div class="my-6">
@@ -48,13 +47,28 @@
         </div>
       </div>
 
-      <!-- Bloco 1 -->
-      <h2 class="text-xl font-bold mb-4">Bloco 1 (Fatec)</h2>
+      <!-- Sala Cards -->
       <div class="grid grid-cols-3 gap-4 mb-8">
         {% for sala in salas %}
           <div class="p-4 bg-custom6 text-white rounded-lg">
             <h3 class="text-lg font-semibold">Sala {{ sala.numero }}</h3>
             <p>{{ sala.status }}</p>
+            <div class="flex space-x-2 mt-4">
+              <!-- Botão Editar -->
+              <a
+                href="{% url 'sala_update' sala.id %}"
+                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
+              >
+                Editar
+              </a>
+              <!-- Botão Excluir -->
+              <a
+                href="{% url 'sala_delete' sala.id %}"
+                class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 transition"
+              >
+                Excluir
+              </a>
+            </div>
           </div>
         {% endfor %}
       </div>

@@ -23,6 +23,10 @@ class ProfessorForm(forms.ModelForm):
             'max_horas': forms.NumberInput(attrs={
                 'class': 'w-full p-2 border border-gray-300 rounded-lg bg-transparent text-custom1 placeholder-gray-400',
             }),
+            
+            'materias': forms.CheckboxSelectMultiple(attrs={
+                'class': 'space-y-2 text-custom1',
+            }),
 
         }
 

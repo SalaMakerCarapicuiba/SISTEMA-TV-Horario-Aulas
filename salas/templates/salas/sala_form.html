@@ -1,17 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Sala</title>
+    <title>{% if form.instance.pk %}Editar Sala{% else %}Cadastrar Nova Sala{% endif %}</title>
+    {% include "app/custom/imports.html" %}
 </head>
-<body>
-    <h1>{% if form.instance.pk %}Editar Sala{% else %}Cadastrar Nova Sala{% endif %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar</button>
-    </form>
-    <a href="{% url 'sala_list' %}">Cancelar</a>
+<body class="font-montserrat bg-backgroun text-custom1 min-h-screen">
+    <section class="min-h-screen flex flex-col p-4">
+        {% include "app/widgets/navbar.html" %}
+        <div class="bg-transparent border border-custom6 rounded-lg p-6">
+            <h1 class="text-2xl font-bold mb-4">
+                {% if form.instance.pk %}Editar Sala{% else %}Cadastrar Nova Sala{% endif %}
+            </h1>
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 gap-6">
+                    <div>
+                        <label for="{{ form.numero.id_for_label }}" class="block text-sm font-medium text-custom1 mb-1">
+                            Número <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.numero }}
+                    </div>
+                    {% comment %} <div>
+                        <label for="{{ form.materias.id_for_label }}" class="block text-sm font-medium text-custom1 mb-1">
+                            Matérias
+                        </label>
+                        {{ form.materias }}
+                    </div> {% endcomment %}
+                </div>
+                <div class="flex justify-between items-center mt-6">
+                    <a href="{% url 'sala_list' %}" class="text-blue-700 hover:underline">Cancelar</a>
+                    <button type="submit" class="bg-custom6 text-white px-4 py-2 rounded-lg hover:bg-blue-800">
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 </body>
 </html>
