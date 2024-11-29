@@ -35,15 +35,21 @@
                 </p>
 
                 <h3 class="text-lg font-semibold text-custom1 mt-4">Matérias:</h3>
-                {% if professor.materias.exists %}
-                    <ul class="list-disc list-inside">
-                        {% for materia in professor.materias.all %}
-                            <li>{{ materia.nome }}</li>
+                <div class="form-group col-span-2">
+             
+                    {% if materias %}
+                    <ul class="list-disc pl-5">
+                        {% for materia in materias %}
+                        <li class="text-custom1">
+                            {{ materia.nome }} - Semestre {{ materia.semestre }}
+                        </li>
                         {% endfor %}
                     </ul>
-                {% else %}
-                    <p>O professor não está vinculado a nenhuma matéria.</p>
-                {% endif %}
+                    {% else %}
+                    <p class="text-custom2">Nenhuma matéria associada a este professor.</p>
+                    {% endif %}
+                </div>
+  
             </div>
         </div>
     </section>
