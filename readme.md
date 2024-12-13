@@ -1,13 +1,13 @@
 <br />
 <div align="center">
   <a href="https://linktr.ee/salamaker">
-    <img src="public\fatec-carapicuiba-sp.png" alt="Logo" width="95%" height="80">
+    <img src="Public\fatec-carapicuiba-sp.png" alt="Logo" width="95%" height="80">
   </a>
 
 </br>
 
  <a href="https://linktr.ee/salamaker">
-    <img src="public\marca-salamaker.png" alt="Logo" height="80">
+    <img src="Public\marca-salamaker.png" alt="Logo" height="80">
   </a>
   <h3 align="center">Sala Maker | Fatec Carapicuíba</h3>
 
